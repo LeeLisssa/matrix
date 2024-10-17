@@ -1,25 +1,39 @@
 #include "matrix.h"
 #include <iostream>
-void inMatrix(int **t, size_t m, size_t n) {
+void inMatrix(int** matrix, size_t m, size_t n) {
   for (size_t i = 0; i < m; i++) {
     for (size_t j = 0; j < n; i++) {
-      std::cin >> t[i][j];
+      std::cin >> matrix[i][j];
     }
   }
 }
-void outMatrix(const int * const * t, size_t m, size_t n) {
+void outMatrix(const int* const* matrix, size_t m, size_t n) {
   for (size_t i = 0; i < m; i++) {
-    std::cout << t[i][j];
+    std::cout << matrix[i][0];
     for (size_t j = 1; j < n; j++) {
-      std::cout << " " << t[i][j];
+      std::cout << " " << matrix[i][j];
     }
     std::cout << "\n";
   }
 }
-void deleteMatrix(int **t, size_t m) {
-  for (size_t i =0; i < m; i++) {
-    delete [] t[i];
+void deleteMatrix(int** matrix, size_t m) {
+  for (size_t i = 0; i < m; i++) {
+    delete [] matrix[i];
   }
-  delete []t;
+  delete []matrix;
+}
+int** createMatrix(size_t m, size_t n) {
+  int** matrix = new int* [m];
+  size_t created = 0;
+  try {
+    for (; created < m; ++created) {
+      matrix[created] = new int[n];
+    }
+  }
+  catch (const std::bad_alloc & e) {
+    deleteMatrix(matrix, created);
+    throw;
+  }
+  return matrix;
 }
 
