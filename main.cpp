@@ -1,16 +1,16 @@
 #include <iostream>
 #include "matrix.h"
-int main() 
+int main()
 {
   size_t n = 0, m = 0;
   std::cin >> m >> n;
-  if (!std::cin || std::cin.eof()) 
+  if (!std::cin || std::cin.eof())
   {
     std::cerr << "wrong cin\n";
     return 1;
   }
   int** matrix = nullptr;
-  try 
+  try
   {
     matrix = createMatrix(m, n);
   }
