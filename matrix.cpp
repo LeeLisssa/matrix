@@ -1,39 +1,68 @@
 #include "matrix.h"
-#include <iostream>
-void inMatrix(int** matrix, size_t m, size_t n) {
-  for (size_t i = 0; i < m; i++) {
-    for (size_t j = 0; j < n; i++) {
-      std::cin >> matrix[i][j];
+Matrix::Matrix(size_t m, size_t n)
+{
+  matrix = new int * [m];
+  for (size_t i = 0; i < m; i++)
+  {
+    matrix[i] = new int[n];
+  }
+}
+Matrix::Matrix(const Matrix& other)
+{
+  matrix = new int * [other.m];
+  for (size_t i = 0; i < other.m; i++)
+  {
+    matrix[i] = new int[other.n];
+    for (size_t j = 0; j < other.n; j++)
+    {
+      matrix[i][j] = other.matrix[i][j];
     }
   }
 }
-void outMatrix(const int* const* matrix, size_t m, size_t n) {
-  for (size_t i = 0; i < m; i++) {
-    std::cout << matrix[i][0];
-    for (size_t j = 1; j < n; j++) {
-      std::cout << " " << matrix[i][j];
+Matrix::~Matrix()
+{
+  for (size_t i = 0; i < m; i++)
+  {
+    delete[] matrix[i];
+  }
+  delete[] matrix;
+}
+size_t Matrix::getM()
+{
+  return m;
+}
+size_t Matrix::getN()
+{
+  return n;
+}
+void Matrix::fillMatrix(int num)
+{
+  for (size_t i = 0; i < m; i++)
+  {
+    for (size_t j = 0; j < n; j++)
+    {
+      matrix[i][j] = num;
     }
-    std::cout << "\n";
   }
 }
-void deleteMatrix(int** matrix, size_t m) {
-  for (size_t i = 0; i < m; i++) {
-    delete [] matrix[i];
-  }
-  delete []matrix;
-}
-int** createMatrix(size_t m, size_t n) {
-  int** matrix = new int* [m];
-  size_t created = 0;
-  try {
-    for (; created < m; ++created) {
-      matrix[created] = new int[n];
+void Matrix::inMatrix(std::istream& in)
+{
+  for (size_t i = 0; i < m; i++)
+  {
+    for (size_t j = 0; j < n; j++)
+    {
+      in >> matrix[i][j];
     }
   }
-  catch (const std::bad_alloc & e) {
-    deleteMatrix(matrix, created);
-    throw;
-  }
-  return matrix;
 }
-
+void Matrix::outMatrix(std::ostream& out)
+{
+  for (size_t i = 0; i < m; i++)
+  {
+    for (size_t j = 0; j < n; j++)
+    {
+      out << matrix[i][j];
+    }
+    out << "\n";
+  }
+}
